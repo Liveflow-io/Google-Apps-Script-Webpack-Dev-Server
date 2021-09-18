@@ -16,7 +16,7 @@ const Client =
   typeof __webpack_dev_server_client__ !== 'undefined'
     ? __webpack_dev_server_client__
     : // eslint-disable-next-line import/no-unresolved
-      require('./clients/SockJSClient');
+      require('./clients/WebsocketClient');
 
 let retries = 0;
 let client = null;

@@ -171,7 +171,7 @@ $(() => {
     },
   };
 
-  socket('/sockjs-node', onSocketMsg);
+  socket('https://localhost:3000/ws', onSocketMsg);
 
   iframe.on('load', () => {
     status.text('App ready.');

@@ -38,13 +38,13 @@ module.exports = {
   plugins: [
     // keep the original webpack dev server config here
     new webpack.NormalModuleReplacementPlugin(
-      /^\.\/clients\/SockJSClient$/,
+      /^\.\/clients\/WebsocketClient$/,
       (resource) => {
         if (resource.context.startsWith(process.cwd())) {
           // eslint-disable-next-line no-param-reassign
           resource.request = resource.request.replace(
-            /^\.\/clients\/SockJSClient$/,
-            path.resolve(__dirname, 'src/clients/SockJSClient')
+            /^\.\/clients\/WebsocketClient$/,
+            path.resolve(__dirname, 'src/clients/WebsocketClient')
           );
         }
       }
