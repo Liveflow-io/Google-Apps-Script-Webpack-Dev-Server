@@ -1,6 +1,6 @@
 {
-  "name": "google-apps-script-webpack-dev-server",
-  "version": "1.0.0",
+  "name": "@evanob/google-apps-script-webpack-dev-server",
+  "version": "1.1.0",
   "description": "Webpack Dev Server fork for github.com/enuchi/React-Google-Apps-Script",
   "main": "build/index.html",
   "files": [
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/enuchi/Google-Apps-Script-Webpack-Dev-Server.git"
+    "url": "git+https://github.com/evanob/Google-Apps-Script-Webpack-Dev-Server.git"
   },
   "keywords": [
     "Goole",
@@ -26,9 +26,12 @@
   "author": "Elisha Nuchi",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/enuchi/Google-Apps-Script-Webpack-Dev-Server/issues"
+    "url": "https://github.com/evanob/Google-Apps-Script-Webpack-Dev-Server/issues"
   },
-  "homepage": "https://github.com/enuchi/Google-Apps-Script-Webpack-Dev-Server#readme",
+  "homepage": "https://github.com/evanob/Google-Apps-Script-Webpack-Dev-Server#readme",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "devDependencies": {
     "@babel/core": "^7.10.5",
     "@babel/preset-env": "^7.10.4",
