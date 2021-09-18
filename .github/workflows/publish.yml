@@ -1,0 +1,27 @@
+name: NPM Package
+on:
+  workflow_dispatch:
+  release:
+    types:
+      - created
+      - edited
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@evanob'
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Publish the package
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
