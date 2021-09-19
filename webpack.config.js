@@ -1,7 +1,9 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
+const HtmlInlineScriptPlugin = require('html-inline-script-webpack-plugin');
+const HTMLInlineCSSWebpackPlugin = require('html-inline-css-webpack-plugin')
+  .default;
 
 const entry = 'src/live/index.js';
 const destination = 'build';
@@ -50,10 +52,8 @@ module.exports = {
       }
     ),
     // embed all js and css inline
-    new HtmlWebpackPlugin({
-      inlineSource: '.(js|css)$',
-    }),
-    // see https://github.com/DustinJackson/html-webpack-inline-source-plugin/issues/63#issuecomment-515963062
-    new HtmlWebpackInlineSourcePlugin(HtmlWebpackPlugin),
+    new HtmlWebpackPlugin(),
+    new HtmlInlineScriptPlugin(),
+    new HTMLInlineCSSWebpackPlugin(),
   ],
 };
