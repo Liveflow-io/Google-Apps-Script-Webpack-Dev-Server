@@ -1,22 +1,18 @@
-'use strict';
-
 /* global __webpack_dev_server_client__ */
-/* eslint-disable
-  camelcase
-*/
 
-// this SockJSClient is here as a default fallback, in case inline mode
-// is off or the client is not injected. This will be switched to
-// WebsocketClient when it becomes the default
+import WebSocketClient from "./clients/WebSocketClient.js";
 
-// important: the path to SockJSClient here is made to work in the 'client'
-// directory, but is updated via the webpack compilation when compiled from
-// the 'client-src' directory
+// this WebsocketClient is here as a default fallback, in case the client is not injected
+/* eslint-disable camelcase */
 const Client =
-  typeof __webpack_dev_server_client__ !== 'undefined'
-    ? __webpack_dev_server_client__
-    : // eslint-disable-next-line import/no-unresolved
-      require('./clients/WebsocketClient');
+  // eslint-disable-next-line camelcase, no-nested-ternary
+  typeof __webpack_dev_server_client__ !== "undefined"
+    ? // eslint-disable-next-line camelcase
+      typeof __webpack_dev_server_client__.default !== "undefined"
+      ? __webpack_dev_server_client__.default
+      : __webpack_dev_server_client__
+    : WebSocketClient;
+/* eslint-enable camelcase */
 
 let retries = 0;
 let client = null;
@@ -42,6 +38,7 @@ const socket = function initSocket(url, handlers) {
       // Respectfully copied from the package `got`.
       // eslint-disable-next-line no-mixed-operators, no-restricted-properties
       const retryInMs = 1000 * Math.pow(2, retries) + Math.random() * 100;
+
       retries += 1;
 
       setTimeout(() => {
@@ -51,11 +48,12 @@ const socket = function initSocket(url, handlers) {
   });
 
   client.onMessage((data) => {
-    const msg = JSON.parse(data);
-    if (handlers[msg.type]) {
-      handlers[msg.type](msg.data);
+    const message = JSON.parse(data);
+
+    if (handlers[message.type]) {
+      handlers[message.type](message.data);
     }
   });
 };
 
-module.exports = socket;
+export default socket;

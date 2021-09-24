@@ -1,25 +1,11 @@
-'use strict';
+import { log } from "../utils/log.js";
 
-/* global WebSocket */
-
-/* eslint-disable
-  no-unused-vars
-*/
-const BaseClient = require('./BaseClient');
-
-module.exports = class WebsocketClient extends BaseClient {
+export default class WebSocketClient {
   constructor(url) {
-    super();
-    this.client = new WebSocket(url.replace(/^http/, 'ws'));
-
-    this.client.onerror = (err) => {
-      // TODO: use logger to log the error event once client and client-src
-      // are reorganized to have the same directory structure
+    this.client = new WebSocket(url);
+    this.client.onerror = (error) => {
+      log.error(error);
     };
-  }
-
-  static getClientPath(options) {
-    return require.resolve('./WebsocketClient');
   }
 
   onOpen(f) {
@@ -36,4 +22,4 @@ module.exports = class WebsocketClient extends BaseClient {
       f(e.data);
     };
   }
-};
+}

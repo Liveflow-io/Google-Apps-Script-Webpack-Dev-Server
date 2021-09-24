@@ -1,24 +1,15 @@
-'use strict';
+import SockJS from "../modules/sockjs-client/index.js";
+import { log } from "../utils/log.js";
 
-/* eslint-disable
-  no-unused-vars
-*/
-const SockJS = require('sockjs-client/dist/sockjs');
-const BaseClient = require('./BaseClient');
-
-module.exports = class SockJSClient extends BaseClient {
+export default class SockJSClient {
   constructor(url) {
-    super();
-    this.sock = new SockJS(url);
-
-    this.sock.onerror = (err) => {
-      // TODO: use logger to log the error event once client and client-src
-      // are reorganized to have the same directory structure
+    // SockJS requires `http` and `https` protocols
+    this.sock = new SockJS(
+      url.replace(/^ws:/i, "http:").replace(/^wss:/i, "https:")
+    );
+    this.sock.onerror = (error) => {
+      log.error(error);
     };
-  }
-
-  static getClientPath(options) {
-    return require.resolve('./SockJSClient');
   }
 
   onOpen(f) {
@@ -35,4 +26,4 @@ module.exports = class SockJSClient extends BaseClient {
       f(e.data);
     };
   }
-};
+}
