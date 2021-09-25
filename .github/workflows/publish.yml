@@ -21,6 +21,8 @@ jobs:
           scope: '@evanob'
       - name: Install dependencies
         run: yarn install --frozen-lockfile
+      - name: Build client
+        run: yarn build:client
       - name: Publish the package
         run: npm publish --access public
         env:
