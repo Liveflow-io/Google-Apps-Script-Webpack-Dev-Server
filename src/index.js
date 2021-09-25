@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 /* global __resourceQuery, __webpack_hash__ */
 
 import webpackHotLog from "webpack/hot/log.js";
@@ -212,3 +213,62 @@ const onSocketMessage = {
 const socketURL = createSocketURL(parsedResourceQuery);
 
 socket(socketURL, onSocketMessage);
+
+document.addEventListener("DOMContentLoaded", (e) => {
+  const contentPage =
+    window.location.pathname.substr("/gas".length) + window.location.search;
+
+  const iframe = document.getElementById("iframe");
+  iframe.setAttribute("src", contentPage + window.location.hash);
+
+  // store request ids here so we can eliminate any duplicates
+  const requestIdList = {};
+
+  const receiveMessage = (event) => {
+    const allowedRequestDomains = [
+      /^https?:\/\/localhost:\d+/,
+      /^https?:\/\/127.0.0.\d+/,
+    ];
+
+    const allowedResponseDomains = [/^https:\/\/.+.googleusercontent.com$/];
+
+    // 'REQUEST' should come from localhost
+    if (
+      event.data.type === "REQUEST" &&
+      !allowedRequestDomains.some((allowDomainRegEx) =>
+        allowDomainRegEx.test(event.origin)
+      )
+    )
+      return;
+
+    // 'RESPONSE' should come from googleusercontent.com
+    if (
+      event.data.type === "RESPONSE" &&
+      !allowedResponseDomains.some((allowDomainRegEx) =>
+        allowDomainRegEx.test(event.origin)
+      )
+    )
+      return;
+
+    const request = event.data;
+
+    // This prevents duplicate requests. No requests should have the same id.
+    // It also solves the infinite loop issue when a page is loaded outside an iframe
+    // and localhost sends and responds to localhost.
+    if (request.type === "REQUEST" && requestIdList[request.id]) {
+      console.warn(
+        "There was an error. This page was probably run outside a Google Apps Script this."
+      );
+      return;
+    }
+    if (request.type === "REQUEST") {
+      requestIdList[request.id] = true;
+      window.parent.postMessage(event.data, "*");
+    }
+    if (request.type === "RESPONSE") {
+      iframe.contentWindow.postMessage(event.data, "*");
+    }
+  };
+
+  self.addEventListener("message", receiveMessage, false);
+});

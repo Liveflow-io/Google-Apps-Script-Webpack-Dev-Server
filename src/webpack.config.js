@@ -2,6 +2,11 @@ const path = require('path');
 const webpack = require('webpack');
 const { merge } = require('webpack-merge');
 
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlInlineScriptPlugin = require('html-inline-script-webpack-plugin');
+const HTMLInlineCSSWebpackPlugin = require('html-inline-css-webpack-plugin')
+  .default;
+
 const library = webpack.webpack
   ? {
       library: {
@@ -86,5 +91,39 @@ module.exports = [
       libraryTarget: 'umd',
       globalObject: "(typeof self !== 'undefined' ? self : this)",
     },
+  }),
+  merge(baseForModules, {
+    mode: 'production',
+    entry: './src/live/index.js',
+    output: {
+      path: path.resolve('client/live'),
+      filename: 'main.js',
+      libraryTarget: 'umd',
+    },
+    module: {
+      rules: [
+        {
+          test: /\.js$/,
+          use: ['babel-loader'],
+        },
+        {
+          test: /\.css$/,
+          use: ['style-loader', 'css-loader'],
+        },
+        {
+          test: /\.html$/,
+          use: ['html-loader'],
+        },
+      ],
+    },
+    plugins: [
+      // embed all js and css inline
+      new HtmlWebpackPlugin({
+        template: './src/live/index.html',
+        filename: `index.html`,
+      }),
+      new HtmlInlineScriptPlugin(),
+      new HTMLInlineCSSWebpackPlugin(),
+    ],
   }),
 ];
