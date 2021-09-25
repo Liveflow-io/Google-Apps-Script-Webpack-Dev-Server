@@ -94,7 +94,7 @@ module.exports = [
   }),
   merge(baseForModules, {
     mode: 'production',
-    entry: './src/live/index.js',
+    entry: path.join(__dirname,  'live/index.js'),
     output: {
       path: path.resolve('client/live'),
       filename: 'main.js',
