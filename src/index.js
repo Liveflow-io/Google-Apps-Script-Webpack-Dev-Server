@@ -221,8 +221,6 @@ document.addEventListener("DOMContentLoaded", (e) => {
   const iframe = document.getElementById("iframe");
   iframe.setAttribute("src", contentPage + window.location.hash);
 
-  const { allowedRequestDomain } = iframe.dataset;
-
   // store request ids here so we can eliminate any duplicates
   const requestIdList = {};
 
@@ -230,7 +228,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
     const allowedRequestDomains = [
       /^https?:\/\/localhost:\d+/,
       /^https?:\/\/127.0.0.\d+/,
-      ...(allowedRequestDomain ? [new RegExp(allowedRequestDomain)] : []),
+      new RegExp(self.location.origin),
     ];
 
     const allowedResponseDomains = [/^https:\/\/.+.googleusercontent.com$/];
