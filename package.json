@@ -1,6 +1,6 @@
 {
   "name": "@liveflow-io/google-apps-script-webpack-dev-server",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "Webpack Dev Server fork for github.com/enuchi/React-Google-Apps-Script",
   "main": "client/live/index.html",
   "files": [
