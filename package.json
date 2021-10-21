@@ -1,5 +1,5 @@
 {
-  "name": "@evanob/google-apps-script-webpack-dev-server",
+  "name": "@liveflow-io/google-apps-script-webpack-dev-server",
   "version": "1.2.4",
   "description": "Webpack Dev Server fork for github.com/enuchi/React-Google-Apps-Script",
   "main": "client/live/index.html",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/evanob/Google-Apps-Script-Webpack-Dev-Server.git"
+    "url": "git+https://github.com/liveflow-io/Google-Apps-Script-Webpack-Dev-Server.git"
   },
   "keywords": [
     "Goole",
@@ -27,9 +27,9 @@
   "author": "Elisha Nuchi",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/evanob/Google-Apps-Script-Webpack-Dev-Server/issues"
+    "url": "https://github.com/liveflow-io/Google-Apps-Script-Webpack-Dev-Server/issues"
   },
-  "homepage": "https://github.com/evanob/Google-Apps-Script-Webpack-Dev-Server#readme",
+  "homepage": "https://github.com/liveflow-io/Google-Apps-Script-Webpack-Dev-Server#readme",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
   },
